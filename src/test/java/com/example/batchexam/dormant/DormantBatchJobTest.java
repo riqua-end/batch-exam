@@ -1,5 +1,7 @@
 package com.example.batchexam.dormant;
 
+import com.example.batchexam.batch.BatchStatus;
+import com.example.batchexam.batch.JobExecution;
 import com.example.batchexam.customer.Customer;
 import com.example.batchexam.customer.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +47,7 @@ class DormantBatchJobTest {
 
         // when
         // 배치 실행
-        dormantBatchJob.execute();
+        final JobExecution result = dormantBatchJob.execute();
 
         // then
         // 휴면 전환 고객이 3명
@@ -56,6 +58,7 @@ class DormantBatchJobTest {
                 ;
 
         assertThat(dormantCount).isEqualTo(3);
+        assertThat(result.getStatus()).isEqualTo(BatchStatus.COMPLETED);
     }
 
 
@@ -75,7 +78,7 @@ class DormantBatchJobTest {
         saveCustomer(400);
 
         // when
-        dormantBatchJob.execute();
+        final JobExecution result = dormantBatchJob.execute();
 
         // then
         final long dormantCount = customerRepository.findAll()
@@ -85,14 +88,15 @@ class DormantBatchJobTest {
                 ;
 
         assertThat(dormantCount).isEqualTo(10);
+        assertThat(result.getStatus()).isEqualTo(BatchStatus.COMPLETED);
     }
 
     @Test
     @DisplayName("고객이 없는 경우에도 배치는 정상 작동 해야한다.")
-    void test(){
+    void test3(){
 
         // when
-        dormantBatchJob.execute();
+        final JobExecution result = dormantBatchJob.execute();
 
         // then
         final long dormantCount = customerRepository.findAll()
@@ -102,7 +106,22 @@ class DormantBatchJobTest {
                 ;
 
         assertThat(dormantCount).isEqualTo(0);
+        assertThat(result.getStatus()).isEqualTo(BatchStatus.COMPLETED);
     }
+
+    @Test
+    @DisplayName("배치가 실패하면 BatchStatus 는 FAILED 를 반환해야 한다.")
+    void test4(){
+        // given
+        final DormantBatchJob dormantBatchJob = new DormantBatchJob(null);
+
+        // when
+        final JobExecution result = dormantBatchJob.execute();
+
+        // then
+        assertThat(result.getStatus()).isEqualTo(BatchStatus.FAILED);
+    }
+
     private void saveCustomer(long loginMinusDays) {
         final String uuid = UUID.randomUUID().toString();
         final Customer test = new Customer(uuid,uuid + "test@test.com");
