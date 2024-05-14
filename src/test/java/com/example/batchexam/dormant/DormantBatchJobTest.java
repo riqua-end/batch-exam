@@ -22,7 +22,7 @@ class DormantBatchJobTest {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private DormantBatchJob dormantBatchJob;
+    private Job dormantBatchJob;
 
     // 각 test 사이의 데이터들을 지워서 초기화
     @BeforeEach
@@ -113,7 +113,7 @@ class DormantBatchJobTest {
     @DisplayName("배치가 실패하면 BatchStatus 는 FAILED 를 반환해야 한다.")
     void test4(){
         // given
-        final DormantBatchJob dormantBatchJob = new DormantBatchJob(null);
+        final Job dormantBatchJob = new Job(null,null);
 
         // when
         final JobExecution result = dormantBatchJob.execute();
