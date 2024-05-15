@@ -113,7 +113,7 @@ class DormantBatchJobTest {
     @DisplayName("배치가 실패하면 BatchStatus 는 FAILED 를 반환해야 한다.")
     void test4(){
         // given
-        final Job dormantBatchJob = new Job(null,null);
+        final Job dormantBatchJob = new TaskletJob(null);
 
         // when
         final JobExecution result = dormantBatchJob.execute();
@@ -122,9 +122,25 @@ class DormantBatchJobTest {
         assertThat(result.getStatus()).isEqualTo(BatchStatus.FAILED);
     }
 
+    @Test
+    @DisplayName("358일 전에 로그인한 고객에게 휴면계정 예정자라고 메일을 발송해야 한다.")
+    void test5(){
+
+        // given
+        saveCustomer(358);
+        saveCustomer(358);
+        saveCustomer(358);
+        saveCustomer(35);
+        saveCustomer(35);
+        // when
+
+        // then
+        dormantBatchJob.execute();
+    }
+
     private void saveCustomer(long loginMinusDays) {
         final String uuid = UUID.randomUUID().toString();
-        final Customer test = new Customer(uuid,uuid + "test@test.com");
+        final Customer test = new Customer(uuid, uuid + "@test.com");
         test.setLoginAt(LocalDateTime.now().minusDays(loginMinusDays));
         customerRepository.save(test);
     }

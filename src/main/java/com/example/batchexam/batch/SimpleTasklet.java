@@ -1,8 +1,4 @@
 package com.example.batchexam.batch;
-
-import org.springframework.stereotype.Component;
-
-@Component
 public class SimpleTasklet<I,O> implements Tasklet {
 
     private final ItemReader<I> itemReader;
