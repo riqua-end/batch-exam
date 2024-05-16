@@ -10,10 +10,5 @@
         <module name="com.example.batch-exam.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="batch-exam" target="17" />
-      <module name="batch-exam.main" target="17" />
-      <module name="batch-exam.test" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
