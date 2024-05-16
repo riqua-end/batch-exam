@@ -1,4 +1,4 @@
-package com.example.batchexam.application.dormant;
+package com.example.batchexam.application;
 
 import com.example.batchexam.batch.ItemReader;
 import com.example.batchexam.customer.Customer;
@@ -9,11 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AllCustomerItemReader implements ItemReader<Customer> {
+public class DormantBatchItemReader implements ItemReader<Customer> {
     private int pageNo = 0;
     private final CustomerRepository customerRepository;
 
-    public AllCustomerItemReader(CustomerRepository customerRepository) {
+    public DormantBatchItemReader(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 

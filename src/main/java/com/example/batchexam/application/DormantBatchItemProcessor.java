@@ -1,4 +1,4 @@
-package com.example.batchexam.application.dormant;
+package com.example.batchexam.application;
 
 import com.example.batchexam.batch.ItemProcessor;
 import com.example.batchexam.customer.Customer;
