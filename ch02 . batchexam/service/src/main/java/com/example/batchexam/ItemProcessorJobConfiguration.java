@@ -20,7 +20,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import java.util.Arrays;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class ItemProcessorJobConfiguration {
 
     @Bean
